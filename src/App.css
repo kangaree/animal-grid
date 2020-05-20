@@ -3,7 +3,7 @@
   min-height: 100vh;
 }
 
-.App-header {
+.App-footer {
   background-color: #282c34;
   display: flex;
   flex-direction: column;
@@ -52,3 +52,37 @@
   visibility: visible;
   opacity: 1;
 }
+
+.scene {
+  width: 600px;
+  height: 600px;
+  perspective: 1200px;
+}
+
+.cube {
+  width: 600px;
+  height: 600px;
+  position: relative;
+  transform-style: preserve-3d;
+  transform: translateZ(-300px);
+  transition: transform 1s;
+}
+
+.cube__face {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border: 2px solid black;
+  line-height: 600px;
+  font-size: 40px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+}
+
+/* .cube__face--front  { transform: rotateY(  0deg) translateZ(300px); } */
+.cube__face--right  { transform: rotateY( 90deg) translateZ(300px) rotateZ( -90deg); }
+/* .cube__face--back   { transform: rotateY(180deg) translateZ(300px); } */
+.cube__face--left   { transform: rotateY(-90deg) translateZ(300px) rotateZ( 90deg); }
+.cube__face--top    { transform: rotateX( 90deg) translateZ(300px) rotateZ(180deg); }
+.cube__face--bottom { transform: rotateX(-90deg) translateZ(300px); }

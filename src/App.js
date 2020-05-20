@@ -7,8 +7,11 @@ import GridLayout from "react-grid-layout";
 
 import furnitures from './data/furnitures.json';
 import floors from './data/floors.json';
+import wallpaper from './data/wallpaper.json';
 
 import _ from "lodash";
+
+import Modal from "react-modal";
 
 class App extends React.Component {
   static defaultProps = {
@@ -21,14 +24,17 @@ class App extends React.Component {
       layout: [],
       objects: {},
       floor: "/images/floors/RoomSpFloorFishTank00.png",
+      wallpaper: "/images/wallpaper/Wallpaper_arched_window.png",
     };
   }
 
   componentDidMount = () => {
     this.resetLayout();
-  }
+  };
 
   resetLayout = () => {
+    this.handleCloseModal();
+
     const reducedFurnitures = furnitures.results.filter(
       (furniture) => furniture.category !== "Wall-mounted"
     );
@@ -44,20 +50,26 @@ class App extends React.Component {
       w: furniture.content.size.cols,
       h: furniture.content.size.rows,
     }));
-    this.setState({layout: layoutFurnitures});
+    this.setState({ layout: layoutFurnitures });
 
     let objects = {};
-    slicedFurnitures.forEach((furniture, i) => objects[furniture.name] = furniture);
-    this.setState({objects});
-    
-    const shuffledFloors = floors.results.sort(
-      () => 0.5 - Math.random()
+    slicedFurnitures.forEach(
+      (furniture, i) => (objects[furniture.name] = furniture)
     );
+    this.setState({ objects });
+
+    const shuffledFloors = floors.results.sort(() => 0.5 - Math.random());
     const firstFloorImage = shuffledFloors[0].image;
     this.setState({ floor: firstFloorImage });
+
+    const shuffledWallpaper = wallpaper.sort(() => 0.5 - Math.random());
+    const firstWallpaperImage = shuffledWallpaper[0].image;
+    this.setState({ wallpaper: firstWallpaperImage });
   };
 
   onAddItem = () => {
+    this.handleCloseModal();
+
     const reducedFurnitures = furnitures.results.filter(
       (furniture) => furniture.category !== "Wall-mounted"
     );
@@ -65,11 +77,11 @@ class App extends React.Component {
       () => 0.5 - Math.random()
     );
     const randomFurniture = shuffledFurnitures[0];
-    
-    this.setState(prevState => {
+
+    this.setState((prevState) => {
       let objects = Object.assign({}, prevState.objects);
       objects[randomFurniture.name] = randomFurniture;
-      return { objects }
+      return { objects };
     });
 
     this.setState({
@@ -81,7 +93,7 @@ class App extends React.Component {
         h: randomFurniture.content.size.rows,
       }),
     });
-  }
+  };
 
   onRemoveItem(i) {
     this.setState({ layout: _.reject(this.state.layout, { i: i }) });
@@ -91,39 +103,104 @@ class App extends React.Component {
     /*eslint no-console: 0*/
     this.setState({ layout });
     this.props.onLayoutChange(layout); // updates status display
-  }
+  };
+
+  handleOpenModal = () => {
+    this.setState({ showModal: true });
+  };
+
+  handleCloseModal = () => {
+    this.setState({ showModal: false });
+  };
+
+  renderControls = () => {
+    return (
+      <div>
+        <button onClick={this.resetLayout}>Reset</button>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <div
+            style={{
+              height: 50,
+              width: 50,
+              backgroundImage: `url(https://acnhcdn.com/latest/FtrIcon/FtrIllumiPresent_Remake_0_0.png)`,
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "100%",
+              className: "tooltip",
+            }}
+          />
+          <button onClick={this.onAddItem}>Add Random Item</button>
+          <input type="text" placeholder="Type an item" style={{ margin: 5 }} />
+        </div>
+      </div>
+    );
+  };
 
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <p>Animal Grid</p>
-          <button onClick={this.resetLayout}>
-            Reset
-          </button>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <div
-              style={{
-                height: 50,
-                width: 50,
-                backgroundImage: `url(https://acnhcdn.com/latest/FtrIcon/FtrIllumiPresent_Remake_0_0.png)`,
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat",
-                backgroundSize: "100%",
-                className: "tooltip",
-              }}
-            />
-            <button onClick={this.onAddItem}>Add</button>
-            <input type="text" placeholder="Type an item" style={{ margin: 5 }} />
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundImage: "url(https://i.imgur.com/xzTvv8z.png)",
+            backgroundSize: 50,
+            height: "100%",
+            paddingTop: 150,
+            paddingBottom: 150,
+          }}
+        >
+          <div className="scene" style={{ position: "absolute" }}>
+            <div className="cube">
+              {/* <div className="cube__face cube__face--front">front</div> */}
+              {/* <div className="cube__face cube__face--back">back</div> */}
+              <div
+                className="cube__face cube__face--right"
+                style={{
+                  backgroundImage:
+                    `url(${this.state.wallpaper})`,
+                  backgroundSize: "50%",
+                }}
+              />
+              <div
+                className="cube__face cube__face--left"
+                style={{
+                  backgroundImage:
+                    `url(${this.state.wallpaper})`,
+                  backgroundSize: "50%",
+                }}
+              />
+              <div
+                className="cube__face cube__face--top"
+                style={{
+                  backgroundImage:
+                    `url(${this.state.wallpaper})`,
+                  backgroundSize: "50%",
+                }}
+              />
+              <div
+                className="cube__face cube__face--bottom"
+                style={{
+                  backgroundImage:
+                    `url(${this.state.wallpaper})`,
+                  backgroundSize: "50%",
+                }}
+              />
+            </div>
           </div>
-        </header>
-        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: 'gray', height: 400 + 50 * 2}}>
+
+          <Modal isOpen={this.state.showModal} contentLabel="Settings">
+            {this.renderControls()}
+            <button onClick={this.handleCloseModal}>Close Settings</button>
+          </Modal>
+
           <div
             style={{
               width: 400,
@@ -180,6 +257,13 @@ class App extends React.Component {
             </GridLayout>
           </div>
         </div>
+        <footer className="App-footer">
+          <p>Animal Grid</p>
+          {/* {this.renderControls()} */}
+          <button onClick={this.handleOpenModal} style={{ marginBottom: 20 }}>
+            Settings
+          </button>
+        </footer>
       </div>
     );
   }
