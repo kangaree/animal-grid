@@ -100,6 +100,17 @@ class App extends React.Component {
     this.setState({ layout: _.reject(this.state.layout, { i: i }) });
   }
 
+  async onRotateItem(i) {
+    let layoutElement = this.state.layout.find(element => element.i === i);
+    const rotatedLayoutElement = {i, x: layoutElement.x, y: layoutElement.y, w: layoutElement.h, h: layoutElement.w};
+
+    await this.setState({ layout: _.reject(this.state.layout, { i: i }) });
+
+    this.setState({
+      layout: this.state.layout.concat(rotatedLayoutElement)
+    });
+  }
+
   onSwitchItem(i, direction) {
     if (this.state.objects[i].variations.length === 0) {
       return;
@@ -271,6 +282,20 @@ class App extends React.Component {
                       }}
                     />
                   </div>
+                  {el.h / el.w !== 1 ? (
+                    <span
+                      className="rotate"
+                      onClick={this.onRotateItem.bind(this, el.i)}
+                      style={{
+                        position: "absolute",
+                        left: "2px",
+                        top: 0,
+                        cursor: "pointer",
+                      }}
+                    >
+                      ↻
+                    </span>
+                  ) : null}
                   <span
                     className="remove"
                     onClick={this.onRemoveItem.bind(this, el.i)}
