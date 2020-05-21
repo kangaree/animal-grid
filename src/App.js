@@ -26,6 +26,7 @@ class App extends React.Component {
       variations: {},
       floor: "/images/floors/RoomSpFloorFishTank00.png",
       wallpaper: "/images/wallpaper/Wallpaper_arched_window.png",
+      locked: false,
     };
   }
 
@@ -178,6 +179,67 @@ class App extends React.Component {
     );
   };
 
+  renderItemControls = (el) => {
+    return (
+      <div>
+        {el.h / el.w !== 1 ? (
+          <span
+            className="rotate"
+            onClick={this.onRotateItem.bind(this, el.i)}
+            style={{
+              position: "absolute",
+              left: "2px",
+              top: 0,
+              cursor: "pointer",
+            }}
+          >
+            ↻
+          </span>
+        ) : null}
+        <span
+          className="remove"
+          onClick={this.onRemoveItem.bind(this, el.i)}
+          style={{
+            position: "absolute",
+            right: "2px",
+            top: 0,
+            cursor: "pointer",
+          }}
+        >
+          x
+        </span>
+        {this.state.objects[el.i].variations.length !== 0 ? (
+          <div>
+            <span
+              className="left"
+              onClick={this.onSwitchItem.bind(this, el.i, "left")}
+              style={{
+                position: "absolute",
+                left: "2px",
+                bottom: 0,
+                cursor: "pointer",
+              }}
+            >
+              ←
+            </span>
+            <span
+              className="right"
+              onClick={this.onSwitchItem.bind(this, el.i, "right")}
+              style={{
+                position: "absolute",
+                right: "2px",
+                bottom: 0,
+                cursor: "pointer",
+              }}
+            >
+              →
+            </span>
+          </div>
+        ) : null}
+      </div>
+    );
+  }
+
   render() {
     return (
       <div className="App">
@@ -196,6 +258,12 @@ class App extends React.Component {
             style={{ position: "absolute", top: "5%" }}
           >
             Animal Grid
+          </button>
+          <button
+            onClick={() => this.setState({ locked: !this.state.locked })}
+            style={{ position: "absolute", top: "10%" }}
+          >
+            {this.state.locked ? "Unlock" : "Lock"}
           </button>
           <div className="scene" style={{ position: "absolute" }}>
             <div className="cube">
@@ -255,13 +323,17 @@ class App extends React.Component {
               width={400}
               compactType={null}
               isResizable={false}
+              isDraggable={!this.state.locked}
               margin={[0, 0]}
               onLayoutChange={this.onLayoutChange}
             >
               {this.state.layout.map((el) => (
                 <div key={el.i}>
                   <div className="tooltip">
-                    <span className="tooltiptext">{el.i}</span>
+                    {this.state.locked ? null : (
+                      <span className="tooltiptext">{el.i}</span>
+                    )}
+                    {this.state.locked ? null : this.renderItemControls(el)}
                     <div
                       style={{
                         height: 50 * el.h,
@@ -280,60 +352,6 @@ class App extends React.Component {
                       }}
                     />
                   </div>
-                  {el.h / el.w !== 1 ? (
-                    <span
-                      className="rotate"
-                      onClick={this.onRotateItem.bind(this, el.i)}
-                      style={{
-                        position: "absolute",
-                        left: "2px",
-                        top: 0,
-                        cursor: "pointer",
-                      }}
-                    >
-                      ↻
-                    </span>
-                  ) : null}
-                  <span
-                    className="remove"
-                    onClick={this.onRemoveItem.bind(this, el.i)}
-                    style={{
-                      position: "absolute",
-                      right: "2px",
-                      top: 0,
-                      cursor: "pointer",
-                    }}
-                  >
-                    x
-                  </span>
-                  {this.state.objects[el.i].variations.length !== 0 ? (
-                    <div>
-                      <span
-                        className="left"
-                        onClick={this.onSwitchItem.bind(this, el.i, "left")}
-                        style={{
-                          position: "absolute",
-                          left: "2px",
-                          bottom: 0,
-                          cursor: "pointer",
-                        }}
-                      >
-                        ←
-                      </span>
-                      <span
-                        className="right"
-                        onClick={this.onSwitchItem.bind(this, el.i, "right")}
-                        style={{
-                          position: "absolute",
-                          right: "2px",
-                          bottom: 0,
-                          cursor: "pointer",
-                        }}
-                      >
-                        →
-                      </span>
-                    </div>
-                  ) : null}
                 </div>
               ))}
             </GridLayout>
