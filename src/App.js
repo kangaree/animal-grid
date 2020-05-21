@@ -23,6 +23,7 @@ class App extends React.Component {
     this.state = {
       layout: [],
       objects: {},
+      variations: {},
       floor: "/images/floors/RoomSpFloorFishTank00.png",
       wallpaper: "/images/wallpaper/Wallpaper_arched_window.png",
     };
@@ -99,6 +100,30 @@ class App extends React.Component {
     this.setState({ layout: _.reject(this.state.layout, { i: i }) });
   }
 
+  onSwitchItem(i, direction) {
+    if (this.state.objects[i].variations.length === 0) {
+      return;
+    }
+
+    if (direction === "right") {
+      this.setState((prevState) => {
+        let variations = Object.assign({}, prevState.variations);
+        variations[i] =
+          ((prevState.variations[i] ? prevState.variations[i] : 0) + 1) %
+          this.state.objects[i].variations.length;
+        return { variations };
+      });
+    } else if (direction === "left") {
+      this.setState((prevState) => {
+        let variations = Object.assign({}, prevState.variations);
+        variations[i] = prevState.variations[i]
+          ? prevState.variations[i] - 1
+          : this.state.objects[i].variations.length - 1;
+        return { variations };
+      });
+    }
+  }
+
   onLayoutChange = (layout) => {
     /*eslint no-console: 0*/
     this.setState({ layout });
@@ -136,7 +161,7 @@ class App extends React.Component {
             }}
           />
           <button onClick={this.onAddItem}>Add Random Item</button>
-          <input type="text" placeholder="Type an item" style={{ margin: 5 }} />
+          {/* <input type="text" placeholder="Type an item" style={{ margin: 5 }} /> */}
         </div>
       </div>
     );
@@ -157,6 +182,12 @@ class App extends React.Component {
             paddingBottom: 150,
           }}
         >
+          <button
+            onClick={this.handleOpenModal}
+            style={{ position: "absolute", top: 12.5 }}
+          >
+            Settings
+          </button>
           <div className="scene" style={{ position: "absolute" }}>
             <div className="cube">
               {/* <div className="cube__face cube__face--front">front</div> */}
@@ -164,32 +195,28 @@ class App extends React.Component {
               <div
                 className="cube__face cube__face--right"
                 style={{
-                  backgroundImage:
-                    `url(${this.state.wallpaper})`,
+                  backgroundImage: `url(${this.state.wallpaper})`,
                   backgroundSize: "50%",
                 }}
               />
               <div
                 className="cube__face cube__face--left"
                 style={{
-                  backgroundImage:
-                    `url(${this.state.wallpaper})`,
+                  backgroundImage: `url(${this.state.wallpaper})`,
                   backgroundSize: "50%",
                 }}
               />
               <div
                 className="cube__face cube__face--top"
                 style={{
-                  backgroundImage:
-                    `url(${this.state.wallpaper})`,
+                  backgroundImage: `url(${this.state.wallpaper})`,
                   backgroundSize: "50%",
                 }}
               />
               <div
                 className="cube__face cube__face--bottom"
                 style={{
-                  backgroundImage:
-                    `url(${this.state.wallpaper})`,
+                  backgroundImage: `url(${this.state.wallpaper})`,
                   backgroundSize: "50%",
                 }}
               />
@@ -231,7 +258,11 @@ class App extends React.Component {
                         height: 50 * el.h,
                         width: 50 * el.w,
                         backgroundImage: `url(${
-                          this.state.objects[el.i].content.image
+                          this.state.variations[el.i]
+                            ? this.state.objects[el.i].variations[
+                                this.state.variations[el.i]
+                              ].content.image
+                            : this.state.objects[el.i].content.image
                         })`,
                         backgroundPosition: "center",
                         backgroundRepeat: "no-repeat",
@@ -252,6 +283,34 @@ class App extends React.Component {
                   >
                     x
                   </span>
+                  {this.state.objects[el.i].variations.length !== 0 ? (
+                    <div>
+                      <span
+                        className="left"
+                        onClick={this.onSwitchItem.bind(this, el.i, "left")}
+                        style={{
+                          position: "absolute",
+                          left: "2px",
+                          bottom: 0,
+                          cursor: "pointer",
+                        }}
+                      >
+                        ←
+                      </span>
+                      <span
+                        className="right"
+                        onClick={this.onSwitchItem.bind(this, el.i, "right")}
+                        style={{
+                          position: "absolute",
+                          right: "2px",
+                          bottom: 0,
+                          cursor: "pointer",
+                        }}
+                      >
+                        →
+                      </span>
+                    </div>
+                  ) : null}
                 </div>
               ))}
             </GridLayout>
@@ -259,10 +318,6 @@ class App extends React.Component {
         </div>
         <footer className="App-footer">
           <p>Animal Grid</p>
-          {/* {this.renderControls()} */}
-          <button onClick={this.handleOpenModal} style={{ marginBottom: 20 }}>
-            Settings
-          </button>
         </footer>
       </div>
     );
