@@ -188,16 +188,14 @@ class App extends React.Component {
             alignItems: "center",
             backgroundImage: "url(https://i.imgur.com/xzTvv8z.png)",
             backgroundSize: 50,
-            height: "100%",
-            paddingTop: 150,
-            paddingBottom: 150,
+            height: "100vh",
           }}
         >
           <button
             onClick={this.handleOpenModal}
-            style={{ position: "absolute", top: 12.5 }}
+            style={{ position: "absolute", top: "5%" }}
           >
-            Settings
+            Animal Grid
           </button>
           <div className="scene" style={{ position: "absolute" }}>
             <div className="cube">
@@ -341,9 +339,6 @@ class App extends React.Component {
             </GridLayout>
           </div>
         </div>
-        <footer className="App-footer">
-          <p>Animal Grid</p>
-        </footer>
       </div>
     );
   }
