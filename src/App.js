@@ -182,6 +182,14 @@ class App extends React.Component {
     this.setState({value: event.target.value, searchedFurnitures});
   };
 
+  handleChangeWallpaper = (event) => {
+    this.setState({ wallpaper: event.target.value })
+  };
+
+  handleChangeFloor = (event) => {
+    this.setState({ floor: event.target.value })
+  };
+
   renderControls = () => {
     return (
       <div>
@@ -189,6 +197,23 @@ class App extends React.Component {
         <button onClick={() => this.setState({ locked: !this.state.locked })}>
           {this.state.locked ? "Unlock" : "Lock"}
         </button>
+        <select
+          value={this.state.wallpaper}
+          onChange={this.handleChangeWallpaper}
+        >
+          {wallpaper
+            .sort((a, b) => (a.name > b.name ? 1 : -1))
+            .map((wallpaper) => (
+              <option value={wallpaper.image}>{wallpaper.name}</option>
+            ))}
+        </select>
+        <select value={this.state.floor} onChange={this.handleChangeFloor}>
+          {floors.results
+            .sort((a, b) => (a.name > b.name ? 1 : -1))
+            .map((floor) => (
+              <option value={floor.image}>{floor.name}</option>
+            ))}
+        </select>
         <div
           style={{
             display: "flex",
