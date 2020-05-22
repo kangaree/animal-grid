@@ -329,6 +329,62 @@ class App extends React.Component {
     );
   }
 
+  renderGrid = () => {
+    return (
+      <div
+        style={{
+          width: 400,
+          height: 400,
+          backgroundImage: `url("${this.state.floor}")`,
+          backgroundSize: 50,
+          backgroundRepeat: "space",
+        }}
+      >
+        <GridLayout
+          className="layout"
+          layout={this.state.layout}
+          cols={8}
+          maxRows={8}
+          rowHeight={50}
+          width={400}
+          compactType={null}
+          isResizable={false}
+          isDraggable={!this.state.locked}
+          margin={[0, 0]}
+          onLayoutChange={this.onLayoutChange}
+        >
+          {this.state.layout.map((el) => (
+            <div key={el.i}>
+              <div className="tooltip">
+                {this.state.locked ? null : (
+                  <span className="tooltiptext">{el.i}</span>
+                )}
+                {this.state.locked ? null : this.renderItemControls(el)}
+                <div
+                  style={{
+                    height: 50 * el.h,
+                    width: 50 * el.w,
+                    backgroundImage: `url(${
+                      this.state.variations[el.i]
+                        ? this.state.objects[el.i].variations[
+                            this.state.variations[el.i]
+                          ].content.image
+                        : this.state.objects[el.i].content.image
+                    })`,
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "100%",
+                    className: "tooltip",
+                  }}
+                />
+              </div>
+            </div>
+          ))}
+        </GridLayout>
+      </div>
+    );
+  }
+
   render() {
     return (
       <div className="App">
@@ -393,58 +449,7 @@ class App extends React.Component {
             {this.renderControls()}
             <button onClick={this.handleCloseModal}>Close Settings</button>
           </Modal>
-
-          <div
-            style={{
-              width: 400,
-              height: 400,
-              backgroundImage: `url("${this.state.floor}")`,
-              backgroundSize: 50,
-              backgroundRepeat: "space",
-            }}
-          >
-            <GridLayout
-              className="layout"
-              layout={this.state.layout}
-              cols={8}
-              maxRows={8}
-              rowHeight={50}
-              width={400}
-              compactType={null}
-              isResizable={false}
-              isDraggable={!this.state.locked}
-              margin={[0, 0]}
-              onLayoutChange={this.onLayoutChange}
-            >
-              {this.state.layout.map((el) => (
-                <div key={el.i}>
-                  <div className="tooltip">
-                    {this.state.locked ? null : (
-                      <span className="tooltiptext">{el.i}</span>
-                    )}
-                    {this.state.locked ? null : this.renderItemControls(el)}
-                    <div
-                      style={{
-                        height: 50 * el.h,
-                        width: 50 * el.w,
-                        backgroundImage: `url(${
-                          this.state.variations[el.i]
-                            ? this.state.objects[el.i].variations[
-                                this.state.variations[el.i]
-                              ].content.image
-                            : this.state.objects[el.i].content.image
-                        })`,
-                        backgroundPosition: "center",
-                        backgroundRepeat: "no-repeat",
-                        backgroundSize: "100%",
-                        className: "tooltip",
-                      }}
-                    />
-                  </div>
-                </div>
-              ))}
-            </GridLayout>
-          </div>
+          {this.renderGrid()}
         </div>
       </div>
     );
