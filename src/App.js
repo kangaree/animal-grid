@@ -27,6 +27,8 @@ class App extends React.Component {
       floor: "/images/floors/RoomSpFloorFishTank00.png",
       wallpaper: "/images/wallpaper/Wallpaper_arched_window.png",
       locked: false,
+      searchValue: '',
+      searchedFurnitures: [],
     };
   }
 
@@ -80,21 +82,42 @@ class App extends React.Component {
     );
     const randomFurniture = shuffledFurnitures[0];
 
-    this.setState((prevState) => {
-      let objects = Object.assign({}, prevState.objects);
-      objects[randomFurniture.name] = randomFurniture;
-      return { objects };
-    });
+    if (this.state.searchedFurnitures.length !== 0) {
+      const searchedFurniture = this.state.searchedFurnitures[0];
+      
+      this.setState((prevState) => {
+        let objects = Object.assign({}, prevState.objects);
+        objects[searchedFurniture.name] = searchedFurniture;
+        return { objects };
+      });
+      this.setState({
+        layout: this.state.layout.concat({
+          i: searchedFurniture.content.name,
+          x: 0,
+          y: 0,
+          w: searchedFurniture.content.size.cols,
+          h: searchedFurniture.content.size.rows,
+        }),
+      });
 
-    this.setState({
-      layout: this.state.layout.concat({
-        i: randomFurniture.content.name,
-        x: 0,
-        y: 0,
-        w: randomFurniture.content.size.cols,
-        h: randomFurniture.content.size.rows,
-      }),
-    });
+    } else {
+      this.setState((prevState) => {
+        let objects = Object.assign({}, prevState.objects);
+        objects[randomFurniture.name] = randomFurniture;
+        return { objects };
+      });
+      this.setState({
+        layout: this.state.layout.concat({
+          i: randomFurniture.content.name,
+          x: 0,
+          y: 0,
+          w: randomFurniture.content.size.cols,
+          h: randomFurniture.content.size.rows,
+        }),
+      });
+    }
+
+
   };
 
   onRemoveItem(i) {
@@ -150,10 +173,22 @@ class App extends React.Component {
     this.setState({ showModal: false });
   };
 
+  handleChange = (event) => {
+    const searchedFurnitures = furnitures.results.filter((furniture) =>
+      furniture.content.name
+        .toLowerCase()
+        .includes(event.target.value.toLowerCase())
+    );
+    this.setState({value: event.target.value, searchedFurnitures});
+  };
+
   renderControls = () => {
     return (
       <div>
         <button onClick={this.resetLayout}>Reset</button>
+        <button onClick={() => this.setState({ locked: !this.state.locked })}>
+          {this.state.locked ? "Unlock" : "Lock"}
+        </button>
         <div
           style={{
             display: "flex",
@@ -165,15 +200,44 @@ class App extends React.Component {
             style={{
               height: 50,
               width: 50,
-              backgroundImage: `url(https://acnhcdn.com/latest/FtrIcon/FtrIllumiPresent_Remake_0_0.png)`,
+              backgroundImage: `url(${
+                this.state.searchedFurnitures.length !== 0
+                  ? this.state.searchedFurnitures[0].content.image
+                  : "https://acnhcdn.com/latest/FtrIcon/FtrIllumiPresent_Remake_0_0.png"
+              })`,
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
               backgroundSize: "100%",
               className: "tooltip",
             }}
           />
-          <button onClick={this.onAddItem}>Add Random Item</button>
-          {/* <input type="text" placeholder="Type an item" style={{ margin: 5 }} /> */}
+          <button onClick={this.onAddItem}>
+            Add{" "}
+            {this.state.searchedFurnitures.length !== 0
+              ? this.state.searchedFurnitures[0].name
+              : "Random Item"}
+          </button>
+          <div style={{ display: "flex" }}>
+            {this.state.showModal && this.state.searchedFurnitures.length !== 0
+              ? this.state.searchedFurnitures
+                  .slice(0, 10)
+                  .map((furniture) => (
+                    <img
+                      src={furniture.content.image}
+                      onClick={(prevState) =>
+                        this.setState({ searchedFurnitures: [furniture] })
+                      }
+                    />
+                  ))
+              : null}
+          </div>
+          <input
+            type="text"
+            placeholder="Type an item"
+            style={{ margin: 5 }}
+            value={this.state.value}
+            onChange={this.handleChange}
+          />
         </div>
       </div>
     );
@@ -253,18 +317,18 @@ class App extends React.Component {
             height: "100vh",
           }}
         >
-          <button
-            onClick={this.handleOpenModal}
-            style={{ position: "absolute", top: "5%" }}
+          <div style={{ position: "absolute", top: 0, marginTop: 50, display: 'flex', flexDirection: 'column' }}>
+            <button
+              onClick={this.handleOpenModal}
+            >
+              Settings
+            </button>
+          </div>
+          <div
+            style={{ position: "absolute", bottom: 0 }}
           >
-            Animal Grid
-          </button>
-          <button
-            onClick={() => this.setState({ locked: !this.state.locked })}
-            style={{ position: "absolute", top: "10%" }}
-          >
-            {this.state.locked ? "Unlock" : "Lock"}
-          </button>
+            {this.renderControls()}
+          </div>
           <div className="scene" style={{ position: "absolute" }}>
             <div className="cube">
               {/* <div className="cube__face cube__face--front">front</div> */}
