@@ -29,6 +29,9 @@ class App extends React.Component {
       locked: false,
       searchValue: '',
       searchedFurnitures: [],
+      rotateX: 0,
+      rotateY: 0,
+      rotateZ: 0,
     };
   }
 
@@ -356,10 +359,11 @@ class App extends React.Component {
           {this.state.layout.map((el) => (
             <div key={el.i}>
               <div className="tooltip">
-                {this.state.locked ? null : (
+                {/* FIXME: Add back tooltip and item controls */}
+                {/* {this.state.locked ? null : (
                   <span className="tooltiptext">{el.i}</span>
                 )}
-                {this.state.locked ? null : this.renderItemControls(el)}
+                {this.state.locked ? null : this.renderItemControls(el)} */}
                 <div
                   style={{
                     height: 50 * el.h,
@@ -374,7 +378,6 @@ class App extends React.Component {
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "100%",
-                    className: "tooltip",
                   }}
                 />
               </div>
@@ -398,12 +401,15 @@ class App extends React.Component {
             height: "100vh",
           }}
         >
-          <div style={{ position: "absolute", top: 0, marginTop: 50, display: 'flex', flexDirection: 'column' }}>
+          <div style={{ position: "absolute", top: 0, marginTop: 25, display: 'flex', flexDirection: 'column' }}>
             <button
               onClick={this.handleOpenModal}
             >
               Settings
             </button>
+            <input type="range" min={-45} max={45} value={this.state.rotateX} onChange={(e) => this.setState({rotateX: e.target.value})}/>
+            <input type="range" min={-45} max={45} value={this.state.rotateY} onChange={(e) => this.setState({rotateY: e.target.value})}/>
+            <input type="range" min={-180} max={180} value={this.state.rotateZ} onChange={(e) => this.setState({rotateZ: e.target.value})}/>
           </div>
           <div
             style={{ position: "absolute", bottom: 0 }}
@@ -411,9 +417,9 @@ class App extends React.Component {
             {this.renderControls()}
           </div>
           <div className="scene" style={{ position: "absolute" }}>
-            <div className="cube">
+            <div className="cube" style={{ transform: `rotateX(${this.state.rotateX}deg) rotateY(${this.state.rotateY}deg) rotateZ(${this.state.rotateZ}deg)` }}>
               {/* <div className="cube__face cube__face--front">front</div> */}
-              {/* <div className="cube__face cube__face--back">back</div> */}
+              <div className="cube__face cube__face--back">{this.renderGrid()}</div>
               <div
                 className="cube__face cube__face--right"
                 style={{
@@ -449,7 +455,6 @@ class App extends React.Component {
             {this.renderControls()}
             <button onClick={this.handleCloseModal}>Close Settings</button>
           </Modal>
-          {this.renderGrid()}
         </div>
       </div>
     );

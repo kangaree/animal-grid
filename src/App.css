@@ -16,10 +16,10 @@
   }
 }
 
-.tooltip {
+/* .tooltip {
   position: relative;
   display: inline-block;
-}
+} */
 
 .tooltip .tooltiptext {
   visibility: hidden;
@@ -73,7 +73,7 @@
 
 /* .cube__face--front  { transform: rotateY(  0deg) translateZ(200px); } */
 .cube__face--right  { transform: rotateY( 90deg) translateZ(200px) rotateZ( -90deg); }
-/* .cube__face--back   { transform: rotateY(180deg) translateZ(200px); } */
+.cube__face--back   { transform: rotateY(180deg) translateZ(200px) rotateZ( 180deg) rotateX(180deg); }
 .cube__face--left   { transform: rotateY(-90deg) translateZ(200px) rotateZ( 90deg); }
 .cube__face--top    { transform: rotateX( 90deg) translateZ(200px) rotateZ(180deg); }
 .cube__face--bottom { transform: rotateX(-90deg) translateZ(200px); }
