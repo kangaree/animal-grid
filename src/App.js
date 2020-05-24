@@ -200,6 +200,27 @@ class App extends React.Component {
         <button onClick={() => this.setState({ locked: !this.state.locked })}>
           {this.state.locked ? "Unlock" : "Lock"}
         </button>
+        <input
+          type="range"
+          min={-45}
+          max={45}
+          value={this.state.rotateX}
+          onChange={(e) => this.setState({ rotateX: e.target.value })}
+        />
+        <input
+          type="range"
+          min={-45}
+          max={45}
+          value={this.state.rotateY}
+          onChange={(e) => this.setState({ rotateY: e.target.value })}
+        />
+        <input
+          type="range"
+          min={-180}
+          max={180}
+          value={this.state.rotateZ}
+          onChange={(e) => this.setState({ rotateZ: e.target.value })}
+        />
         <select
           value={this.state.wallpaper}
           onChange={this.handleChangeWallpaper}
@@ -273,7 +294,7 @@ class App extends React.Component {
 
   renderItemControls = (el) => {
     return (
-      <div>
+      <div style={{fontSize: 12, color: 'black'}}>
         {el.h / el.w !== 1 ? (
           <span
             className="rotate"
@@ -355,15 +376,16 @@ class App extends React.Component {
           isDraggable={!this.state.locked}
           margin={[0, 0]}
           onLayoutChange={this.onLayoutChange}
+          // ratio of "back" panel to layout size
+          transformScale={367.27 / 400}
         >
           {this.state.layout.map((el) => (
             <div key={el.i}>
               <div className="tooltip">
-                {/* FIXME: Add back tooltip and item controls */}
-                {/* {this.state.locked ? null : (
+                {this.state.locked ? null : (
                   <span className="tooltiptext">{el.i}</span>
                 )}
-                {this.state.locked ? null : this.renderItemControls(el)} */}
+                {this.state.locked ? null : this.renderItemControls(el)}
                 <div
                   style={{
                     height: 50 * el.h,
@@ -401,25 +423,21 @@ class App extends React.Component {
             height: "100vh",
           }}
         >
-          <div style={{ position: "absolute", top: 0, marginTop: 25, display: 'flex', flexDirection: 'column' }}>
-            <button
-              onClick={this.handleOpenModal}
-            >
-              Settings
-            </button>
-            <input type="range" min={-45} max={45} value={this.state.rotateX} onChange={(e) => this.setState({rotateX: e.target.value})}/>
-            <input type="range" min={-45} max={45} value={this.state.rotateY} onChange={(e) => this.setState({rotateY: e.target.value})}/>
-            <input type="range" min={-180} max={180} value={this.state.rotateZ} onChange={(e) => this.setState({rotateZ: e.target.value})}/>
-          </div>
-          <div
-            style={{ position: "absolute", bottom: 0 }}
-          >
-            {this.renderControls()}
-          </div>
+          <img
+            style={{ position: "absolute", top: 0, marginTop: 25, height: 75 }}
+            src={"/images/ui/AnimalGridTitle.png"}
+          />
           <div className="scene" style={{ position: "absolute" }}>
-            <div className="cube" style={{ transform: `rotateX(${this.state.rotateX}deg) rotateY(${this.state.rotateY}deg) rotateZ(${this.state.rotateZ}deg)` }}>
+            <div
+              className="cube"
+              style={{
+                transform: `rotateX(${this.state.rotateX}deg) rotateY(${this.state.rotateY}deg) rotateZ(${this.state.rotateZ}deg)`,
+              }}
+            >
               {/* <div className="cube__face cube__face--front">front</div> */}
-              <div className="cube__face cube__face--back">{this.renderGrid()}</div>
+              <div className="cube__face cube__face--back">
+                {this.renderGrid()}
+              </div>
               <div
                 className="cube__face cube__face--right"
                 style={{
@@ -449,6 +467,23 @@ class App extends React.Component {
                 }}
               />
             </div>
+          </div>
+
+          <div
+            style={{
+              position: "absolute",
+              bottom: 0,
+              marginBottom: 25,
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <input
+              type="image"
+              onClick={this.handleOpenModal}
+              src="/images/ui/Resetti.png"
+              style={{height: 50, width: 50, margin: 'auto'}}
+            />
           </div>
 
           <Modal isOpen={this.state.showModal} contentLabel="Settings">
