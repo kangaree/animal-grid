@@ -467,7 +467,7 @@ class App extends React.Component {
                 className="cube__face cube__face--right"
                 style={{
                   backgroundImage: `url(${this.state.wallpaper})`,
-                  backgroundSize: "50%",
+                  backgroundSize: "25%",
                   opacity:
                     this.state.rotateZ % 360 !== 90 &&
                     this.state.rotateZ % 360 !== -270
@@ -483,7 +483,7 @@ class App extends React.Component {
                 className="cube__face cube__face--left"
                 style={{
                   backgroundImage: `url(${this.state.wallpaper})`,
-                  backgroundSize: "50%",
+                  backgroundSize: "25%",
                   opacity:
                     this.state.rotateZ % 360 !== 270 &&
                     this.state.rotateZ % 360 !== -90
@@ -499,7 +499,7 @@ class App extends React.Component {
                 className="cube__face cube__face--top"
                 style={{
                   backgroundImage: `url(${this.state.wallpaper})`,
-                  backgroundSize: "50%",
+                  backgroundSize: "25%",
                   opacity:
                     this.state.rotateZ % 360 !== 180 &&
                     this.state.rotateZ % 360 !== -180
@@ -515,7 +515,7 @@ class App extends React.Component {
                 className="cube__face cube__face--bottom"
                 style={{
                   backgroundImage: `url(${this.state.wallpaper})`,
-                  backgroundSize: "50%",
+                  backgroundSize: "25%",
                   opacity:
                     this.state.rotateZ % 360 !== 0
                       ? 1
