@@ -13,6 +13,8 @@ import _ from "lodash";
 
 import Modal from "react-modal";
 
+import ArrowKeysReact from "arrow-keys-react";
+
 class App extends React.Component {
   static defaultProps = {
     onLayoutChange: function () {},
@@ -33,6 +35,29 @@ class App extends React.Component {
       rotateY: 0,
       rotateZ: 0,
     };
+    ArrowKeysReact.config({
+      left: () => {
+        this.setState((state) => {
+          return { rotateZ: state.rotateZ - 90 };
+        });
+      },
+      right: () => {
+        this.setState((state) => {
+          return { rotateZ: state.rotateZ + 90 };
+        });
+      },
+      up: () => {
+        this.setState((state) => {
+          return { rotateX: Math.min( state.rotateX + 45, 90) };
+        });
+      },
+      down: () => {
+        this.setState((state) => {
+          return { rotateX: Math.max( state.rotateX - 45, 0) };
+        });
+      },
+    });
+
   }
 
   componentDidMount = () => {
@@ -412,7 +437,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="App" {...ArrowKeysReact.events} tabIndex="1">
         <div
           style={{
             display: "flex",
@@ -443,6 +468,15 @@ class App extends React.Component {
                 style={{
                   backgroundImage: `url(${this.state.wallpaper})`,
                   backgroundSize: "50%",
+                  opacity:
+                    this.state.rotateZ % 360 !== 90 &&
+                    this.state.rotateZ % 360 !== -270
+                      ? 1
+                      : this.state.rotateX === 90
+                      ? 0
+                      : this.state.rotateX === 45
+                      ? 0.25
+                      : 1,
                 }}
               />
               <div
@@ -450,6 +484,15 @@ class App extends React.Component {
                 style={{
                   backgroundImage: `url(${this.state.wallpaper})`,
                   backgroundSize: "50%",
+                  opacity:
+                    this.state.rotateZ % 360 !== 270 &&
+                    this.state.rotateZ % 360 !== -90
+                      ? 1
+                      : this.state.rotateX === 90
+                      ? 0
+                      : this.state.rotateX === 45
+                      ? 0.25
+                      : 1,
                 }}
               />
               <div
@@ -457,6 +500,15 @@ class App extends React.Component {
                 style={{
                   backgroundImage: `url(${this.state.wallpaper})`,
                   backgroundSize: "50%",
+                  opacity:
+                    this.state.rotateZ % 360 !== 180 &&
+                    this.state.rotateZ % 360 !== -180
+                      ? 1
+                      : this.state.rotateX === 90
+                      ? 0
+                      : this.state.rotateX === 45
+                      ? 0.25
+                      : 1,
                 }}
               />
               <div
@@ -464,6 +516,14 @@ class App extends React.Component {
                 style={{
                   backgroundImage: `url(${this.state.wallpaper})`,
                   backgroundSize: "50%",
+                  opacity:
+                    this.state.rotateZ % 360 !== 0
+                      ? 1
+                      : this.state.rotateX === 90
+                      ? 0
+                      : this.state.rotateX === 45
+                      ? 0.25
+                      : 1,
                 }}
               />
             </div>
