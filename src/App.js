@@ -8,6 +8,7 @@ import GridLayout from "react-grid-layout";
 import furnitures from './data/furnitures.json';
 import floors from './data/floors.json';
 import wallpaper from './data/wallpaper.json';
+import { AnimalData as animalHouses } from './data/animalHouse';
 
 import _ from "lodash";
 
@@ -26,14 +27,20 @@ class App extends React.Component {
       layout: [],
       objects: {},
       variations: {},
-      floor: "/images/floors/RoomSpFloorFishTank00.png",
-      wallpaper: "/images/wallpaper/Wallpaper_arched_window.png",
+      floor: "/images/floors/RoomTexFloorCommon00.png",
+      // wallpaper: "/images/wallpaper/Wallpaper_common_wall.png",
+      wallpaper: "/images/wallpaper/Wallpaper_office_wall.png",
       locked: false,
-      searchValue: '',
+      searchValue: "",
       searchedFurnitures: [],
       rotateX: 0,
       rotateY: 0,
       rotateZ: 0,
+      gridHeight: 12,
+      gridWidth: 12,
+      // gridDepth needs to be bumped to 8
+      gridDepth: 8,
+      gridSize: 25,
     };
     ArrowKeysReact.config({
       left: () => {
@@ -61,7 +68,7 @@ class App extends React.Component {
   }
 
   componentDidMount = () => {
-    this.resetLayout();
+    this.setVillagerLayout();
   };
 
   resetLayout = () => {
@@ -79,8 +86,8 @@ class App extends React.Component {
       i: furniture.content.name,
       x: i,
       y: Math.floor(Math.random() * 6),
-      w: furniture.content.size.cols,
-      h: furniture.content.size.rows,
+      w: furniture.content.size.cols * 2,
+      h: furniture.content.size.rows * 2,
     }));
     this.setState({ layout: layoutFurnitures });
 
@@ -98,6 +105,60 @@ class App extends React.Component {
     const firstWallpaperImage = shuffledWallpaper[0].image;
     this.setState({ wallpaper: firstWallpaperImage });
   };
+
+  setVillagerLayout = (index = 63) => {
+    // this.resetLayout();
+
+    // Raymond is 63
+    // FIXME: duplicate items (multi document stacks). 
+    // FIXME: items that are on top of tables (newtons cradle).
+    const villagerHouse = animalHouses[index];
+
+    const villagerFloorImage = floors.results.find(
+      (floor) => floor.internalID === villagerHouse.floor.id
+    ).image;
+
+    this.setState({floor: villagerFloorImage});
+
+    // const shuffledWallpaper = wallpaper.sort(() => 0.5 - Math.random());
+    // const firstWallpaperImage = shuffledWallpaper[0].image;
+    // this.setState({ wallpaper: firstWallpaperImage });
+
+    const villagerItems = villagerHouse.items;
+    // take out wall hanging items in north and west wall
+    const filteredItems = villagerItems.filter((item) => (item.x >= 0 && item.y >=0));
+    
+    let objects = {};
+
+    const layoutFurnitures = filteredItems.map((villagerFurniture) => {
+      
+      const catalogFurniture = furnitures.results.find(
+        (catalogFurniture) =>
+          catalogFurniture.content.internalID === villagerFurniture.id
+      );
+
+      objects[catalogFurniture.name] = catalogFurniture;
+
+      return {
+        i: catalogFurniture.name,
+        // coordinates are flipped?
+        x: villagerFurniture.y,
+        y: villagerFurniture.x,
+        // w: catalogFurniture.content.size.cols * 2,
+        // h: catalogFurniture.content.size.rows * 2,
+        w:
+          villagerFurniture.width === 0
+            ? catalogFurniture.content.size.cols * 2
+            : villagerFurniture.width * 2,
+        h:
+          villagerFurniture.length === 0
+            ? catalogFurniture.content.size.cols * 2
+            : villagerFurniture.length * 2,
+      };
+    });
+
+    this.setState({ layout: layoutFurnitures, objects });
+  }
 
   onAddItem = () => {
     this.handleCloseModal();
@@ -123,8 +184,8 @@ class App extends React.Component {
           i: searchedFurniture.content.name,
           x: 0,
           y: 0,
-          w: searchedFurniture.content.size.cols,
-          h: searchedFurniture.content.size.rows,
+          w: searchedFurniture.content.size.cols * 2,
+          h: searchedFurniture.content.size.rows * 2,
         }),
       });
 
@@ -139,8 +200,8 @@ class App extends React.Component {
           i: randomFurniture.content.name,
           x: 0,
           y: 0,
-          w: randomFurniture.content.size.cols,
-          h: randomFurniture.content.size.rows,
+          w: randomFurniture.content.size.cols * 2,
+          h: randomFurniture.content.size.rows * 2,
         }),
       });
     }
@@ -253,7 +314,9 @@ class App extends React.Component {
           {wallpaper
             .sort((a, b) => (a.name > b.name ? 1 : -1))
             .map((wallpaper) => (
-              <option value={wallpaper.image}>{wallpaper.name}</option>
+              <option value={wallpaper.image} key={wallpaper.image}>
+                {wallpaper.name}
+              </option>
             ))}
         </select>
         <select value={this.state.floor} onChange={this.handleChangeFloor}>
@@ -272,8 +335,8 @@ class App extends React.Component {
         >
           <div
             style={{
-              height: 50,
-              width: 50,
+              height: this.state.gridSize,
+              width: this.state.gridSize,
               backgroundImage: `url(${
                 this.state.searchedFurnitures.length !== 0
                   ? this.state.searchedFurnitures[0].content.image
@@ -382,27 +445,28 @@ class App extends React.Component {
     return (
       <div
         style={{
-          width: 400,
-          height: 400,
+          width: this.state.gridWidth * this.state.gridSize,
+          height: this.state.gridHeight * this.state.gridSize,
           backgroundImage: `url("${this.state.floor}")`,
-          backgroundSize: 50,
+          backgroundSize: this.state.gridSize * 2,
+          // backgroundSize: "100%",
           backgroundRepeat: "space",
         }}
       >
         <GridLayout
           className="layout"
           layout={this.state.layout}
-          cols={8}
-          maxRows={8}
-          rowHeight={50}
-          width={400}
+          cols={this.state.gridWidth}
+          maxRows={this.state.gridHeight}
+          rowHeight={this.state.gridSize}
+          width={this.state.gridWidth * this.state.gridSize}
           compactType={null}
           isResizable={false}
           isDraggable={!this.state.locked}
           margin={[0, 0]}
           onLayoutChange={this.onLayoutChange}
           // ratio of "back" panel to layout size
-          transformScale={367.27 / 400}
+          transformScale={272.73 / (this.state.gridWidth * this.state.gridSize)}
         >
           {this.state.layout.map((el) => (
             <div key={el.i}>
@@ -413,8 +477,8 @@ class App extends React.Component {
                 {this.state.locked ? null : this.renderItemControls(el)}
                 <div
                   style={{
-                    height: 50 * el.h,
-                    width: 50 * el.w,
+                    height: this.state.gridSize * el.h,
+                    width: this.state.gridSize * el.w,
                     backgroundImage: `url(${
                       this.state.variations[el.i]
                         ? this.state.objects[el.i].variations[
@@ -444,7 +508,7 @@ class App extends React.Component {
             justifyContent: "center",
             alignItems: "center",
             backgroundImage: "url(https://i.imgur.com/xzTvv8z.png)",
-            backgroundSize: 50,
+            backgroundSize: this.state.gridSize,
             height: "100vh",
           }}
         >
@@ -452,22 +516,37 @@ class App extends React.Component {
             style={{ position: "absolute", top: 0, marginTop: 25, height: 75 }}
             src={"/images/ui/AnimalGridTitle.png"}
           />
-          <div className="scene" style={{ position: "absolute" }}>
+          <div
+            className="scene"
+            style={{
+              position: "absolute",
+              width: this.state.gridWidth * this.state.gridSize,
+              height: this.state.gridHeight * this.state.gridSize,
+            }}
+          >
             <div
               className="cube"
               style={{
                 transform: `rotateX(${this.state.rotateX}deg) rotateY(${this.state.rotateY}deg) rotateZ(${this.state.rotateZ}deg)`,
+                width: this.state.gridWidth * this.state.gridSize,
+                height: this.state.gridHeight * this.state.gridSize,
               }}
             >
               {/* <div className="cube__face cube__face--front">front</div> */}
-              <div className="cube__face cube__face--back">
+              <div
+                className="cube__face cube__face--back"
+                style={{
+                  width: this.state.gridWidth * this.state.gridSize,
+                  height: this.state.gridHeight * this.state.gridSize,
+                }}
+              >
                 {this.renderGrid()}
               </div>
               <div
                 className="cube__face cube__face--right"
                 style={{
                   backgroundImage: `url(${this.state.wallpaper})`,
-                  backgroundSize: "25%",
+                  backgroundSize: "33.33%",
                   opacity:
                     this.state.rotateZ % 360 !== 90 &&
                     this.state.rotateZ % 360 !== -270
@@ -477,13 +556,20 @@ class App extends React.Component {
                       : this.state.rotateX === 45
                       ? 0.25
                       : 1,
+                  height: this.state.gridDepth * this.state.gridSize,
+                  width: this.state.gridWidth * this.state.gridSize,
+                  transform: `rotateY(90deg) translateZ(${
+                    (this.state.gridHeight * this.state.gridSize) / 2
+                  }px) translateY(${
+                    (this.state.gridHeight / 2 - 4) * this.state.gridSize
+                  }px) rotateZ(-90deg)`,
                 }}
               />
               <div
                 className="cube__face cube__face--left"
                 style={{
                   backgroundImage: `url(${this.state.wallpaper})`,
-                  backgroundSize: "25%",
+                  backgroundSize: "33.33%",
                   opacity:
                     this.state.rotateZ % 360 !== 270 &&
                     this.state.rotateZ % 360 !== -90
@@ -493,13 +579,20 @@ class App extends React.Component {
                       : this.state.rotateX === 45
                       ? 0.25
                       : 1,
+                  height: this.state.gridDepth * this.state.gridSize,
+                  width: this.state.gridWidth * this.state.gridSize,
+                  transform: `rotateY(-90deg) translateZ(${
+                    (this.state.gridWidth * this.state.gridSize) / 2
+                  }px) translateY(${
+                    (this.state.gridHeight / 2 - 4) * this.state.gridSize
+                  }px) rotateZ(90deg)`,
                 }}
               />
               <div
                 className="cube__face cube__face--top"
                 style={{
                   backgroundImage: `url(${this.state.wallpaper})`,
-                  backgroundSize: "25%",
+                  backgroundSize: "33.33%",
                   opacity:
                     this.state.rotateZ % 360 !== 180 &&
                     this.state.rotateZ % 360 !== -180
@@ -509,13 +602,15 @@ class App extends React.Component {
                       : this.state.rotateX === 45
                       ? 0.25
                       : 1,
+                  height: this.state.gridDepth * this.state.gridSize,
+                  width: this.state.gridWidth * this.state.gridSize,
                 }}
               />
               <div
                 className="cube__face cube__face--bottom"
                 style={{
                   backgroundImage: `url(${this.state.wallpaper})`,
-                  backgroundSize: "25%",
+                  backgroundSize: "33.33%",
                   opacity:
                     this.state.rotateZ % 360 !== 0
                       ? 1
@@ -524,6 +619,11 @@ class App extends React.Component {
                       : this.state.rotateX === 45
                       ? 0.25
                       : 1,
+                  height: this.state.gridDepth * this.state.gridSize,
+                  width: this.state.gridWidth * this.state.gridSize,
+                  transform: `rotateX(-90deg) translateZ(${
+                    this.state.gridDepth * this.state.gridSize
+                  }px)`,
                 }}
               />
             </div>
@@ -542,7 +642,11 @@ class App extends React.Component {
               type="image"
               onClick={this.handleOpenModal}
               src="/images/ui/Resetti.png"
-              style={{height: 50, width: 50, margin: 'auto'}}
+              style={{
+                height: this.state.gridSize * 2,
+                width: this.state.gridSize * 2,
+                margin: "auto",
+              }}
             />
           </div>
 
