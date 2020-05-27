@@ -8,6 +8,7 @@ import GridLayout from "react-grid-layout";
 import furnitures from './data/furnitures.json';
 import floors from './data/floors.json';
 import wallpaper from './data/wallpaper.json';
+import villagers from './data/villagers.json';
 import { AnimalData as animalHouses } from './data/animalHouse';
 
 import _ from "lodash";
@@ -106,31 +107,33 @@ class App extends React.Component {
     this.setState({ wallpaper: firstWallpaperImage });
   };
 
-  setVillagerLayout = (index = 63) => {
-    // this.resetLayout();
+  setVillagerLayout = (index) => {
+    this.handleCloseModal();
 
-    // Raymond is 63
-    // FIXME: duplicate items (multi document stacks). 
-    // FIXME: items that are on top of tables (newtons cradle).
-    const villagerHouse = animalHouses[index];
-
-    const villagerFloorImage = floors.results.find(
-      (floor) => floor.internalID === villagerHouse.floor.id
-    ).image;
-
-    this.setState({floor: villagerFloorImage});
-
-    // const shuffledWallpaper = wallpaper.sort(() => 0.5 - Math.random());
-    // const firstWallpaperImage = shuffledWallpaper[0].image;
-    // this.setState({ wallpaper: firstWallpaperImage });
-
-    const villagerItems = villagerHouse.items;
-    // take out wall hanging items in north and west wall
-    const filteredItems = villagerItems.filter((item) => (item.x >= 0 && item.y >=0));
-    
     let objects = {};
 
-    const layoutFurnitures = filteredItems.map((villagerFurniture) => {
+    const randomVillagerIndex = Math.floor(Math.random() * animalHouses.length);
+
+    const villagerHouse = animalHouses[randomVillagerIndex];
+    
+    const villagerFloorImage = floors.results.find(
+      (floor) => floor.internalID === villagerHouse.floor.id
+      ).image;
+      
+      this.setState({floor: villagerFloorImage});
+      
+      const shuffledWallpaper = wallpaper.sort(() => 0.5 - Math.random());
+      const firstWallpaperImage = shuffledWallpaper[0].image;
+      this.setState({ wallpaper: firstWallpaperImage });
+      
+      const villagerItems = villagerHouse.items;
+      // take out wall hanging items in north and west wall
+      // const filteredItems = villagerItems.filter((item) => (item.x >= 0 && item.y >=0));
+      // also take out items on top of things
+      // TODO: items that are on top of tables (newtons cradle).
+    const filteredItems = villagerItems.filter((item) => (item.x >= 0 && item.y >=0 && item.z === 0));
+
+    let layoutFurnitures = filteredItems.map((villagerFurniture) => {
       
       const catalogFurniture = furnitures.results.find(
         (catalogFurniture) =>
@@ -157,7 +160,23 @@ class App extends React.Component {
       };
     });
 
-    this.setState({ layout: layoutFurnitures, objects });
+    const villager = villagers.find(
+      (villager) => villager.name === villagerHouse.name
+    );
+
+    const villagerLayout = {
+      i: villager.name,
+      x: 5,
+      y: 5,
+      w: 2,
+      h: 2,
+    };
+
+    layoutFurnitures = [...layoutFurnitures, villagerLayout];
+
+    objects[villager.name] = { content: { image: villager.iconImage }, variations: [], type: "villager" };
+
+    this.setState({ layout: layoutFurnitures, objects, villager });
   }
 
   onAddItem = () => {
@@ -282,7 +301,8 @@ class App extends React.Component {
   renderControls = () => {
     return (
       <div>
-        <button onClick={this.resetLayout}>Reset</button>
+        <button onClick={this.resetLayout}>Random Layout</button>
+        <button onClick={this.setVillagerLayout}>Set Villager</button>
         <button onClick={() => this.setState({ locked: !this.state.locked })}>
           {this.state.locked ? "Unlock" : "Lock"}
         </button>
