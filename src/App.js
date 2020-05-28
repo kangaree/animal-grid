@@ -619,7 +619,7 @@ class App extends React.Component {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            backgroundImage: "url(https://i.imgur.com/xzTvv8z.png)",
+            backgroundImage: "url(/images/ui/grassTexture.png)",
             backgroundSize: this.state.gridSize * 2,
             height: "100vh",
           }}
