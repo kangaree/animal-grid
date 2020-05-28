@@ -2,12 +2,14 @@
     {
         "name": "ancient_wall",
         "file": "Wallpaper_ancient_wall.png",
-        "image": "/images/wallpaper/Wallpaper_ancient_wall.png"
+        "image": "/images/wallpaper/Wallpaper_ancient_wall.png",
+        "nh": "Ancient Wall"
     },
     {
         "name": "arched_window",
         "file": "Wallpaper_arched_window.png",
-        "image": "/images/wallpaper/Wallpaper_arched_window.png"
+        "image": "/images/wallpaper/Wallpaper_arched_window.png",
+        "nh": "Arched-Window Wall"
     },
     {
         "name": "backgammon_wall",
@@ -17,12 +19,14 @@
     {
         "name": "backyard_fence",
         "file": "Wallpaper_backyard_fence.png",
-        "image": "/images/wallpaper/Wallpaper_backyard_fence.png"
+        "image": "/images/wallpaper/Wallpaper_backyard_fence.png",
+        "nh": "Backyard-Fence Wall"
     },
     {
         "name": "bamboo_wall",
         "file": "Wallpaper_bamboo_wall.png",
-        "image": "/images/wallpaper/Wallpaper_bamboo_wall.png"
+        "image": "/images/wallpaper/Wallpaper_bamboo_wall.png",
+        "nh": "Bamboo Wall"
     },
     {
         "name": "basement_wall",
@@ -37,17 +41,20 @@
     {
         "name": "blue-trim_wall",
         "file": "Wallpaper_blue-trim_wall.png",
-        "image": "/images/wallpaper/Wallpaper_blue-trim_wall.png"
+        "image": "/images/wallpaper/Wallpaper_blue-trim_wall.png",
+        "nh": "Blue Simple-Cloth Wall"
     },
     {
         "name": "blue_tarp",
         "file": "Wallpaper_blue_tarp.png",
-        "image": "/images/wallpaper/Wallpaper_blue_tarp.png"
+        "image": "/images/wallpaper/Wallpaper_blue_tarp.png",
+        "nh": "Blue Simple-Cloth Wall"
     },
     {
         "name": "blue_wall",
         "file": "Wallpaper_blue_wall.png",
-        "image": "/images/wallpaper/Wallpaper_blue_wall.png"
+        "image": "/images/wallpaper/Wallpaper_blue_wall.png",
+        "nh": "Blue-Paint Wall"
     },
     {
         "name": "cabana_wall",
@@ -57,12 +64,14 @@
     {
         "name": "cabin_wall",
         "file": "Wallpaper_cabin_wall.png",
-        "image": "/images/wallpaper/Wallpaper_cabin_wall.png"
+        "image": "/images/wallpaper/Wallpaper_cabin_wall.png",
+        "nh": "Cabin Wall"
     },
     {
         "name": "chainlink_fence",
         "file": "Wallpaper_chainlink_fence.png",
-        "image": "/images/wallpaper/Wallpaper_chainlink_fence.png"
+        "image": "/images/wallpaper/Wallpaper_chainlink_fence.png",
+        "nh": "Chain-Link Fence"
     },
     {
         "name": "chic_wall",
@@ -77,7 +86,8 @@
     {
         "name": "cityscape_wall",
         "file": "Wallpaper_cityscape_wall.png",
-        "image": "/images/wallpaper/Wallpaper_cityscape_wall.png"
+        "image": "/images/wallpaper/Wallpaper_cityscape_wall.png",
+        "nh": "Cityscape Wall"
     },
     {
         "name": "classic_wall",
@@ -92,12 +102,14 @@
     {
         "name": "common_wall",
         "file": "Wallpaper_common_wall.png",
-        "image": "/images/wallpaper/Wallpaper_common_wall.png"
+        "image": "/images/wallpaper/Wallpaper_common_wall.png",
+        "nh": "Common Wall"
     },
     {
         "name": "concrete_wall",
         "file": "Wallpaper_concrete_wall.png",
-        "image": "/images/wallpaper/Wallpaper_concrete_wall.png"
+        "image": "/images/wallpaper/Wallpaper_concrete_wall.png",
+        "nh": "Concrete Wall"
     },
     {
         "name": "convenient_wall",
@@ -122,7 +134,8 @@
     {
         "name": "dirt-clod_wall",
         "file": "Wallpaper_dirt-clod_wall.png",
-        "image": "/images/wallpaper/Wallpaper_dirt-clod_wall.png"
+        "image": "/images/wallpaper/Wallpaper_dirt-clod_wall.png",
+        "nh": "Dirt-Clod Wall"
     },
     {
         "name": "egg_wall",
@@ -137,7 +150,8 @@
     {
         "name": "exquisite_wall",
         "file": "Wallpaper_exquisite_wall.png",
-        "image": "/images/wallpaper/Wallpaper_exquisite_wall.png"
+        "image": "/images/wallpaper/Wallpaper_exquisite_wall.png",
+        "nh": "Exquisite Wall"
     },
     {
         "name": "floral_wall",
@@ -147,17 +161,20 @@
     {
         "name": "forest_wall",
         "file": "Wallpaper_forest_wall.png",
-        "image": "/images/wallpaper/Wallpaper_forest_wall.png"
+        "image": "/images/wallpaper/Wallpaper_forest_wall.png",
+        "nh": "Forest Wall"
     },
     {
         "name": "garden_wall",
         "file": "Wallpaper_garden_wall.png",
-        "image": "/images/wallpaper/Wallpaper_garden_wall.png"
+        "image": "/images/wallpaper/Wallpaper_garden_wall.png",
+        "nh": "Mossy-Garden Wall"
     },
     {
         "name": "gold_screen_wall",
         "file": "Wallpaper_gold_screen_wall.png",
-        "image": "/images/wallpaper/Wallpaper_gold_screen_wall.png"
+        "image": "/images/wallpaper/Wallpaper_gold_screen_wall.png",
+        "nh": "Gold-Screen Wall"
     },
     {
         "name": "gorgeous_wall",
@@ -172,7 +189,8 @@
     {
         "name": "green_wall",
         "file": "Wallpaper_green_wall.png",
-        "image": "/images/wallpaper/Wallpaper_green_wall.png"
+        "image": "/images/wallpaper/Wallpaper_green_wall.png",
+        "nh": "Green Painted-Wood Wall"
     },
     {
         "name": "groovy_wall",
@@ -192,17 +210,20 @@
     {
         "name": "imperial_wall",
         "file": "Wallpaper_imperial_wall.png",
-        "image": "/images/wallpaper/Wallpaper_imperial_wall.png"
+        "image": "/images/wallpaper/Wallpaper_imperial_wall.png",
+        "nh": "Imperial Wall"
     },
     {
         "name": "industrial_wall",
         "file": "Wallpaper_industrial_wall.png",
-        "image": "/images/wallpaper/Wallpaper_industrial_wall.png"
+        "image": "/images/wallpaper/Wallpaper_industrial_wall.png",
+        "nh": "Industrial Wall"
     },
     {
         "name": "ivy_wall",
         "file": "Wallpaper_ivy_wall.png",
-        "image": "/images/wallpaper/Wallpaper_ivy_wall.png"
+        "image": "/images/wallpaper/Wallpaper_ivy_wall.png",
+        "nh": "Ivy Wall"
     },
     {
         "name": "jingle_wall",
@@ -232,12 +253,14 @@
     {
         "name": "lattice_wall",
         "file": "Wallpaper_lattice_wall.png",
-        "image": "/images/wallpaper/Wallpaper_lattice_wall.png"
+        "image": "/images/wallpaper/Wallpaper_lattice_wall.png",
+        "nh": "Lattice Wall"
     },
     {
         "name": "library_wall",
         "file": "Wallpaper_library_wall.png",
-        "image": "/images/wallpaper/Wallpaper_library_wall.png"
+        "image": "/images/wallpaper/Wallpaper_library_wall.png",
+        "nh": "Classic-Library Wall"
     },
     {
         "name": "lovely_wall",
@@ -247,22 +270,26 @@
     {
         "name": "lunar_horizon",
         "file": "Wallpaper_lunar_horizon.png",
-        "image": "/images/wallpaper/Wallpaper_lunar_horizon.png"
+        "image": "/images/wallpaper/Wallpaper_lunar_horizon.png",
+        "nh": "Starry-Sky Wall"
     },
     {
         "name": "manor_wall",
         "file": "Wallpaper_manor_wall.png",
-        "image": "/images/wallpaper/Wallpaper_manor_wall.png"
+        "image": "/images/wallpaper/Wallpaper_manor_wall.png",
+        "nh": "Blue Delicate-Blooms Wall"
     },
     {
         "name": "meadow_vista",
         "file": "Wallpaper_meadow_vista.png",
-        "image": "/images/wallpaper/Wallpaper_meadow_vista.png"
+        "image": "/images/wallpaper/Wallpaper_meadow_vista.png",
+        "nh": "Meadow Vista"
     },
     {
         "name": "mod_wall",
         "file": "Wallpaper_mod_wall.png",
-        "image": "/images/wallpaper/Wallpaper_mod_wall.png"
+        "image": "/images/wallpaper/Wallpaper_mod_wall.png",
+        "nh": "Mod Wall"
     },
     {
         "name": "modern_screen",
@@ -272,22 +299,26 @@
     {
         "name": "modern_wall",
         "file": "Wallpaper_modern_wall.png",
-        "image": "/images/wallpaper/Wallpaper_modern_wall.png"
+        "image": "/images/wallpaper/Wallpaper_modern_wall.png",
+        "nh": "Modern Wood Wall"
     },
     {
         "name": "mortar_wall",
         "file": "Wallpaper_mortar_wall.png",
-        "image": "/images/wallpaper/Wallpaper_mortar_wall.png"
+        "image": "/images/wallpaper/Wallpaper_mortar_wall.png",
+        "nh": "Modern Shoji-Screen Wall"
     },
     {
         "name": "mosaic_wall",
         "file": "Wallpaper_mosaic_wall.png",
-        "image": "/images/wallpaper/Wallpaper_mosaic_wall.png"
+        "image": "/images/wallpaper/Wallpaper_mosaic_wall.png",
+        "nh": "Dark Wooden-Mosaic Wall"
     },
     {
         "name": "mushroom_mural",
         "file": "Wallpaper_mushroom_mural.png",
-        "image": "/images/wallpaper/Wallpaper_mushroom_mural.png"
+        "image": "/images/wallpaper/Wallpaper_mushroom_mural.png",
+        "nh": "Forest Flooring"
     },
     {
         "name": "music-room_wall",
@@ -297,12 +328,14 @@
     {
         "name": "office_wall",
         "file": "Wallpaper_office_wall.png",
-        "image": "/images/wallpaper/Wallpaper_office_wall.png"
+        "image": "/images/wallpaper/Wallpaper_office_wall.png",
+        "nh": "Office Wall"
     },
     {
         "name": "old_brick_wall",
         "file": "Wallpaper_old_brick_wall.png",
-        "image": "/images/wallpaper/Wallpaper_old_brick_wall.png"
+        "image": "/images/wallpaper/Wallpaper_old_brick_wall.png",
+        "nh": "Red-Brick Wall"
     },
     {
         "name": "old_wallpaper",
@@ -322,7 +355,8 @@
     {
         "name": "pastel-dot_wall",
         "file": "Wallpaper_pastel-dot_wall.png",
-        "image": "/images/wallpaper/Wallpaper_pastel-dot_wall.png"
+        "image": "/images/wallpaper/Wallpaper_pastel-dot_wall.png",
+        "nh": "Pastel Dotted Wall"
     },
     {
         "name": "pave_wall",
@@ -337,12 +371,14 @@
     {
         "name": "plaster_wall",
         "file": "Wallpaper_plaster_wall.png",
-        "image": "/images/wallpaper/Wallpaper_plaster_wall.png"
+        "image": "/images/wallpaper/Wallpaper_plaster_wall.png",
+        "nh": "Mortar Wall"
     },
     {
         "name": "playroom_wall",
         "file": "Wallpaper_playroom_wall.png",
-        "image": "/images/wallpaper/Wallpaper_playroom_wall.png"
+        "image": "/images/wallpaper/Wallpaper_playroom_wall.png",
+        "nh": "Blue Playroom Wall"
     },
     {
         "name": "plaza_wall",
@@ -367,7 +403,8 @@
     {
         "name": "ringside_seating",
         "file": "Wallpaper_ringside_seating.png",
-        "image": "/images/wallpaper/Wallpaper_ringside_seating.png"
+        "image": "/images/wallpaper/Wallpaper_ringside_seating.png",
+        "nh": "Ringside Seating"
     },
     {
         "name": "robo-wall",
@@ -377,32 +414,38 @@
     {
         "name": "rose_wall",
         "file": "Wallpaper_rose_wall.png",
-        "image": "/images/wallpaper/Wallpaper_rose_wall.png"
+        "image": "/images/wallpaper/Wallpaper_rose_wall.png",
+        "nh": "Rose Wall"
     },
     {
         "name": "sea_view",
         "file": "Wallpaper_sea_view.png",
-        "image": "/images/wallpaper/Wallpaper_sea_view.png"
+        "image": "/images/wallpaper/Wallpaper_sea_view.png",
+        "nh": "Sea View"
     },
     {
         "name": "shanty_wall",
         "file": "Wallpaper_shanty_wall.png",
-        "image": "/images/wallpaper/Wallpaper_shanty_wall.png"
+        "image": "/images/wallpaper/Wallpaper_shanty_wall.png",
+        "nh": "Gray Shanty Wall"
     },
     {
         "name": "shoji_screen",
         "file": "Wallpaper_shoji_screen.png",
-        "image": "/images/wallpaper/Wallpaper_shoji_screen.png"
+        "image": "/images/wallpaper/Wallpaper_shoji_screen.png",
+        "nh": "Shoji Screen"
     },
     {
         "name": "sky_wall",
         "file": "Wallpaper_sky_wall.png",
-        "image": "/images/wallpaper/Wallpaper_sky_wall.png"
+        "image": "/images/wallpaper/Wallpaper_sky_wall.png",
+        "nh": "Sky Wall"
     },
     {
         "name": "snowman_wall",
         "file": "Wallpaper_snowman_wall.png",
-        "image": "/images/wallpaper/Wallpaper_snowman_wall.png"
+        "image": "/images/wallpaper/Wallpaper_snowman_wall.png",
+        "nh": "Snowflake Wall"
     },
     {
         "name": "spooky_wall",
@@ -412,12 +455,14 @@
     {
         "name": "stately_wall",
         "file": "Wallpaper_stately_wall.png",
-        "image": "/images/wallpaper/Wallpaper_stately_wall.png"
+        "image": "/images/wallpaper/Wallpaper_stately_wall.png",
+        "nh": "Stately Wall"
     },
     {
         "name": "stone_wall",
         "file": "Wallpaper_stone_wall.png",
-        "image": "/images/wallpaper/Wallpaper_stone_wall.png"
+        "image": "/images/wallpaper/Wallpaper_stone_wall.png",
+        "nh": "Rustic-Stone Wall"
     },
     {
         "name": "supermarket_wall",
@@ -437,21 +482,25 @@
     {
         "name": "tree-lined_wall",
         "file": "Wallpaper_tree-lined_wall.png",
-        "image": "/images/wallpaper/Wallpaper_tree-lined_wall.png"
+        "image": "/images/wallpaper/Wallpaper_tree-lined_wall.png",
+        "nh": "Tree-Lined Wall"
     },
     {
         "name": "tropical_vista",
         "file": "Wallpaper_tropical_vista.png",
-        "image": "/images/wallpaper/Wallpaper_tropical_vista.png"
+        "image": "/images/wallpaper/Wallpaper_tropical_vista.png",
+        "nh": "Tropical Vista"
     },
     {
         "name": "western_vista",
         "file": "Wallpaper_western_vista.png",
-        "image": "/images/wallpaper/Wallpaper_western_vista.png"
+        "image": "/images/wallpaper/Wallpaper_western_vista.png",
+        "nh": "Western Vista"
     },
     {
         "name": "wood_paneling",
         "file": "Wallpaper_wood_paneling.png",
-        "image": "/images/wallpaper/Wallpaper_wood_paneling.png"
+        "image": "/images/wallpaper/Wallpaper_wood_paneling.png",
+        "nh": "Wild-Wood Wall"
     }
 ]

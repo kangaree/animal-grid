@@ -29,8 +29,7 @@ class App extends React.Component {
       objects: {},
       variations: {},
       floor: "/images/floors/RoomTexFloorCommon00.png",
-      // wallpaper: "/images/wallpaper/Wallpaper_common_wall.png",
-      wallpaper: "/images/wallpaper/Wallpaper_office_wall.png",
+      wallpaper: "/images/wallpaper/Wallpaper_common_wall.png",
       locked: false,
       searchValue: "",
       searchedFurnitures: [],
@@ -134,9 +133,15 @@ class App extends React.Component {
       
       this.setState({floor: villagerFloorImage});
       
+      const newLeafWall = wallpaper.find((wp) => wp.nh === villagerHouse.wallpaper.name);
       const shuffledWallpaper = wallpaper.sort(() => 0.5 - Math.random());
       const firstWallpaperImage = shuffledWallpaper[0].image;
-      this.setState({ wallpaper: firstWallpaperImage });
+
+      if (newLeafWall) {
+        this.setState({ wallpaper: newLeafWall.image });
+      } else {
+        this.setState({ wallpaper: firstWallpaperImage });
+      }
       
       const villagerItems = villagerHouse.items;
       // take out wall hanging items in north and west wall
