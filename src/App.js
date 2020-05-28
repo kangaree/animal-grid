@@ -83,7 +83,7 @@ class App extends React.Component {
     );
     const slicedFurnitures = shuffledFurnitures.slice(0, 10);
     const layoutFurnitures = slicedFurnitures.map((furniture, i) => ({
-      i: furniture.content.name,
+      i: furniture.content.name + "|0",
       x: i,
       y: Math.floor(Math.random() * 6),
       w: furniture.content.size.cols * 2,
@@ -93,7 +93,7 @@ class App extends React.Component {
 
     let objects = {};
     slicedFurnitures.forEach(
-      (furniture, i) => (objects[furniture.name] = furniture)
+      (furniture) => (objects[furniture.name + "|0"] = furniture)
     );
     this.setState({ objects });
 
