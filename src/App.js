@@ -283,7 +283,7 @@ class App extends React.Component {
       this.setState({
         layout: this.state.layout.concat({
           i: iName,
-          x: 0,
+          x: 5,
           y: 0,
           w: searchedFurniture.content.size.cols * 2,
           h: searchedFurniture.content.size.rows * 2,
@@ -299,7 +299,7 @@ class App extends React.Component {
       this.setState({
         layout: this.state.layout.concat({
           i: randomFurniture.content.name,
-          x: 0,
+          x: 5,
           y: 0,
           w: randomFurniture.content.size.cols * 2,
           h: randomFurniture.content.size.rows * 2,
