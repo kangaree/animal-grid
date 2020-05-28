@@ -67953,7 +67953,7 @@ export const AnimalData = [{
     }]
 }, {
     "id": "rhn08",
-    "name": "Ren�e",
+    "name": "Renée",
     "wallpaper": {
         "object": "RoomSpWallSkull00",
         "id": 5520,
