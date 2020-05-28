@@ -340,7 +340,7 @@ class App extends React.Component {
             .slice()
             .sort((a, b) => (a.name > b.name ? 1 : -1))
             .map((house) => (
-              <option value={house.name}>{house.name}</option>
+              <option value={house.name} key={house.name}>{house.name}</option>
             ))}
         </select>
         <button onClick={() => this.setState({ locked: !this.state.locked })}>
@@ -383,7 +383,7 @@ class App extends React.Component {
           {floors.results
             .sort((a, b) => (a.name > b.name ? 1 : -1))
             .map((floor) => (
-              <option value={floor.image}>{floor.name}</option>
+              <option value={floor.image} key={floor.name}>{floor.name}</option>
             ))}
         </select>
         <div
@@ -424,6 +424,7 @@ class App extends React.Component {
                       onClick={(prevState) =>
                         this.setState({ searchedFurnitures: [furniture] })
                       }
+                      alt={furniture.content.name}
                     />
                   ))
               : null}
@@ -576,6 +577,7 @@ class App extends React.Component {
           <img
             style={{ position: "absolute", top: 0, marginTop: 25, height: 75 }}
             src={"/images/ui/AnimalGridTitle.png"}
+            alt="Animal Grid Title"
           />
           <div
             className="scene"
@@ -703,6 +705,7 @@ class App extends React.Component {
               type="image"
               onClick={this.handleOpenModal}
               src="/images/ui/Resetti.png"
+              alt="Mr. Resetti"
               style={{
                 height: this.state.gridSize * 2,
                 width: this.state.gridSize * 2,
