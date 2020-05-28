@@ -178,11 +178,15 @@ class App extends React.Component {
         w:
           villagerFurniture.width === 0
             ? catalogFurniture.content.size.cols * 2
-            : villagerFurniture.width * 2,
+            : villagerFurniture.Data1 % 2 === 0
+            ? villagerFurniture.width * 2
+            : villagerFurniture.length * 2,
         h:
           villagerFurniture.length === 0
             ? catalogFurniture.content.size.cols * 2
-            : villagerFurniture.length * 2,
+            : villagerFurniture.Data1 % 2 === 0
+            ? villagerFurniture.length * 2
+            : villagerFurniture.width * 2,
       };
     });
 
