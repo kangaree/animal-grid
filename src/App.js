@@ -191,7 +191,7 @@ class App extends React.Component {
     });
 
     const villager = villagers.find(
-      (villager) => villager.name === villagerHouse.name
+      (villager) => villager.filename === villagerHouse.id
     );
 
     const villagerLayout = {
