@@ -152,10 +152,15 @@ class App extends React.Component {
 
     let layoutFurnitures = filteredItems.map((villagerFurniture) => {
       
-      const catalogFurniture = furnitures.results.find(
+      let catalogFurniture = furnitures.results.find(
         (catalogFurniture) =>
           catalogFurniture.content.internalID === villagerFurniture.id
       );
+
+      if (!catalogFurniture) {
+        // replace furniture with a cardboard box if it is missing
+        catalogFurniture = furnitures.results[77];
+      };
 
       const repeatArray = filteredItems.filter(
         (catalogFurniture) =>
