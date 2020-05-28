@@ -48,6 +48,7 @@ class App extends React.Component {
       rightNeighbor: "",
       rightImage:
         "https://acnhcdn.com/drivesync/render/houses/cat10_61_Kid%20Cat.png",
+      width: 0,
     };
     ArrowKeysReact.config({
       left: () => {
@@ -75,7 +76,13 @@ class App extends React.Component {
   }
 
   componentDidMount = () => {
+    this.updateWindowDimensions();
+    window.addEventListener("resize", this.updateWindowDimensions);
     this.setVillagerLayout();
+  };
+
+  updateWindowDimensions = () => {
+    this.setState({ width: window.innerWidth });
   };
 
   resetLayout = () => {
@@ -625,7 +632,13 @@ class App extends React.Component {
           }}
         >
           <img
-            style={{ position: "absolute", top: 0, marginTop: 25, height: 75 }}
+            style={{
+              position: "absolute",
+              top: 0,
+              marginTop: 25,
+              height: this.state.width >= 500 && 75,
+              width: this.state.width < 500 && 250,
+            }}
             src={"/images/ui/AnimalGridTitle.png"}
             alt="Animal Grid Title"
           />
@@ -765,7 +778,7 @@ class App extends React.Component {
             />
           </div>
 
-          <input
+          {this.state.width > 1000 && <input
             type="image"
             style={{
               position: "absolute",
@@ -776,9 +789,9 @@ class App extends React.Component {
             src={this.state.leftImage}
             alt="Animal Grid Title"
             onClick={() => this.setVillagerLayout(this.state.leftNeighbor)}
-          />
+          />}
 
-          <input
+          {this.state.width > 1000 && <input
             type="image"
             style={{
               position: "absolute",
@@ -789,7 +802,7 @@ class App extends React.Component {
             src={this.state.rightImage}
             alt="Animal Grid Title"
             onClick={() => this.setVillagerLayout(this.state.rightNeighbor)}
-          />
+          />}
 
           <Modal isOpen={this.state.showModal} contentLabel="Settings">
             {this.renderControls()}
