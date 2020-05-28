@@ -519,6 +519,7 @@ class App extends React.Component {
           compactType={null}
           isResizable={false}
           isDraggable={!this.state.locked}
+          preventCollision={true}
           margin={[0, 0]}
           onLayoutChange={this.onLayoutChange}
           // ratio of "back" panel to layout size
