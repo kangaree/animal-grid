@@ -107,14 +107,26 @@ class App extends React.Component {
     this.setState({ wallpaper: firstWallpaperImage });
   };
 
-  setVillagerLayout = (index) => {
+  setVillagerLayout = (villagerString) => {
     this.handleCloseModal();
 
     let objects = {};
 
+    let setVillagerIndex = -1;
+
+    if (villagerString) {
+      setVillagerIndex = animalHouses.findIndex((house) => house.name === villagerString);
+    };
+
     const randomVillagerIndex = Math.floor(Math.random() * animalHouses.length);
 
-    const villagerHouse = animalHouses[randomVillagerIndex];
+    let villagerHouse = animalHouses[randomVillagerIndex];
+
+    if (setVillagerIndex !== -1) {
+      villagerHouse = animalHouses[setVillagerIndex]
+    }
+
+    this.setState({villagerHouse: villagerHouse.name});
     
     const villagerFloorImage = floors.results.find(
       (floor) => floor.internalID === villagerHouse.floor.id
@@ -313,7 +325,15 @@ class App extends React.Component {
     return (
       <div>
         <button onClick={this.resetLayout}>Random Layout</button>
-        <button onClick={this.setVillagerLayout}>Set Villager</button>
+        <button onClick={this.setVillagerLayout}>Random Villager</button>
+        <select value={this.state.villagerHouse} onChange={(event) => this.setVillagerLayout(event.target.value)}>
+          {animalHouses
+            .slice()
+            .sort((a, b) => (a.name > b.name ? 1 : -1))
+            .map((house) => (
+              <option value={house.name}>{house.name}</option>
+            ))}
+        </select>
         <button onClick={() => this.setState({ locked: !this.state.locked })}>
           {this.state.locked ? "Unlock" : "Lock"}
         </button>
