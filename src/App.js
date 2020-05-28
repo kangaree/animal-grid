@@ -140,10 +140,19 @@ class App extends React.Component {
           catalogFurniture.content.internalID === villagerFurniture.id
       );
 
-      objects[catalogFurniture.name] = catalogFurniture;
+      const repeatArray = filteredItems.filter(
+        (catalogFurniture) =>
+          catalogFurniture.id === villagerFurniture.id
+      );
+
+      const itemIndex = repeatArray.indexOf(villagerFurniture);
+
+      const iName = catalogFurniture.name + '|' + itemIndex;
+
+      objects[iName] = catalogFurniture;
 
       return {
-        i: catalogFurniture.name,
+        i: iName,
         // coordinates are flipped?
         x: villagerFurniture.y,
         y: villagerFurniture.x,
@@ -192,15 +201,17 @@ class App extends React.Component {
 
     if (this.state.searchedFurnitures.length !== 0) {
       const searchedFurniture = this.state.searchedFurnitures[0];
+
+      const iName = searchedFurniture.name + "|" + Object.values(this.state.objects).filter((obj) => obj.id === searchedFurniture.id).length;
       
       this.setState((prevState) => {
         let objects = Object.assign({}, prevState.objects);
-        objects[searchedFurniture.name] = searchedFurniture;
+        objects[iName] = searchedFurniture;
         return { objects };
       });
       this.setState({
         layout: this.state.layout.concat({
-          i: searchedFurniture.content.name,
+          i: iName,
           x: 0,
           y: 0,
           w: searchedFurniture.content.size.cols * 2,
@@ -492,7 +503,7 @@ class App extends React.Component {
             <div key={el.i}>
               <div className="tooltip">
                 {this.state.locked ? null : (
-                  <span className="tooltiptext">{el.i}</span>
+                  <span className="tooltiptext">{el.i.split("|")[0]}</span>
                 )}
                 {this.state.locked ? null : this.renderItemControls(el)}
                 <div
