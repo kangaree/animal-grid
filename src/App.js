@@ -126,18 +126,22 @@ class App extends React.Component {
 
     const randomVillagerIndex = Math.floor(Math.random() * animalHouses.length);
 
+    const leftRandomIndex = randomVillagerIndex === 0 ? 390 : randomVillagerIndex - 1;
+    const rightRandomIndex = (randomVillagerIndex + 1) % 391;
+
     let villagerHouse = animalHouses[randomVillagerIndex];
-    let leftNeighbor = animalHouses[randomVillagerIndex - 1].name;
-    let rightNeighbor = animalHouses[randomVillagerIndex + 1].name;
+    let leftNeighbor = animalHouses[leftRandomIndex].name;
+    let rightNeighbor = animalHouses[rightRandomIndex].name;
 
     if (setVillagerIndex !== -1) {
+      const leftSetIndex = setVillagerIndex === 0 ? 390 : setVillagerIndex - 1;
+      const rightSetIndex = (setVillagerIndex + 1) % 391;
       villagerHouse = animalHouses[setVillagerIndex];
-      leftNeighbor = animalHouses[setVillagerIndex - 1].name;
-      rightNeighbor = animalHouses[setVillagerIndex + 1].name;
+      leftNeighbor = animalHouses[leftSetIndex].name;
+      rightNeighbor = animalHouses[rightSetIndex].name;
 
-      
-      const leftVillagerID = animalHouses[setVillagerIndex - 1].id;
-      const rightVillagerID = animalHouses[setVillagerIndex + 1].id;
+      const leftVillagerID = animalHouses[leftSetIndex].id;
+      const rightVillagerID = animalHouses[rightSetIndex].id;
 
       const leftVillager = villagers.find(
         (villager) =>
@@ -153,11 +157,11 @@ class App extends React.Component {
     } else {
 
       const leftVillager = villagers.find(
-        (villager) => villager.filename === animalHouses[randomVillagerIndex - 1].id
+        (villager) => villager.filename === animalHouses[leftRandomIndex].id
       );
 
       const rightVillager = villagers.find(
-        (villager) => villager.filename === animalHouses[randomVillagerIndex + 1].id
+        (villager) => villager.filename === animalHouses[rightRandomIndex].id
       );
 
       this.setState({
