@@ -41,6 +41,13 @@ class App extends React.Component {
       // gridDepth needs to be bumped to 8
       gridDepth: 8,
       gridSize: 25,
+      villagerHouse: "",
+      leftNeighbor: "",
+      leftImage:
+        "https://acnhcdn.com/drivesync/render/houses/cat10_61_Kid%20Cat.png",
+      rightNeighbor: "",
+      rightImage:
+        "https://acnhcdn.com/drivesync/render/houses/cat10_61_Kid%20Cat.png",
     };
     ArrowKeysReact.config({
       left: () => {
@@ -120,12 +127,46 @@ class App extends React.Component {
     const randomVillagerIndex = Math.floor(Math.random() * animalHouses.length);
 
     let villagerHouse = animalHouses[randomVillagerIndex];
+    let leftNeighbor = animalHouses[randomVillagerIndex - 1].name;
+    let rightNeighbor = animalHouses[randomVillagerIndex + 1].name;
 
     if (setVillagerIndex !== -1) {
-      villagerHouse = animalHouses[setVillagerIndex]
+      villagerHouse = animalHouses[setVillagerIndex];
+      leftNeighbor = animalHouses[setVillagerIndex - 1].name;
+      rightNeighbor = animalHouses[setVillagerIndex + 1].name;
+
+      
+      const leftVillagerID = animalHouses[setVillagerIndex - 1].id;
+      const rightVillagerID = animalHouses[setVillagerIndex + 1].id;
+
+      const leftVillager = villagers.find(
+        (villager) =>
+          villager.filename === leftVillagerID
+      );
+
+      const rightVillager = villagers.find(
+        (villager) =>
+          villager.filename === rightVillagerID
+      );
+
+      this.setState({ leftImage: leftVillager.houseImage, rightImage: rightVillager.houseImage });
+    } else {
+
+      const leftVillager = villagers.find(
+        (villager) => villager.filename === animalHouses[randomVillagerIndex - 1].id
+      );
+
+      const rightVillager = villagers.find(
+        (villager) => villager.filename === animalHouses[randomVillagerIndex + 1].id
+      );
+
+      this.setState({
+        leftImage: leftVillager.houseImage,
+        rightImage: rightVillager.houseImage,
+      });
     }
 
-    this.setState({villagerHouse: villagerHouse.name});
+    this.setState({ villagerHouse: villagerHouse.name, leftNeighbor, rightNeighbor});
     
     const villagerFloorImage = floors.results.find(
       (floor) => floor.internalID === villagerHouse.floor.id
@@ -575,7 +616,7 @@ class App extends React.Component {
             justifyContent: "center",
             alignItems: "center",
             backgroundImage: "url(https://i.imgur.com/xzTvv8z.png)",
-            backgroundSize: this.state.gridSize,
+            backgroundSize: this.state.gridSize * 2,
             height: "100vh",
           }}
         >
@@ -715,9 +756,36 @@ class App extends React.Component {
                 height: this.state.gridSize * 2,
                 width: this.state.gridSize * 2,
                 margin: "auto",
+                outline: "none",
               }}
             />
           </div>
+
+          <input
+            type="image"
+            style={{
+              position: "absolute",
+              left: 50,
+              height: this.state.gridHeight * this.state.gridSize,
+              outline: "none",
+            }}
+            src={this.state.leftImage}
+            alt="Animal Grid Title"
+            onClick={() => this.setVillagerLayout(this.state.leftNeighbor)}
+          />
+
+          <input
+            type="image"
+            style={{
+              position: "absolute",
+              right: 50,
+              height: this.state.gridHeight * this.state.gridSize,
+              outline: "none",
+            }}
+            src={this.state.rightImage}
+            alt="Animal Grid Title"
+            onClick={() => this.setVillagerLayout(this.state.rightNeighbor)}
+          />
 
           <Modal isOpen={this.state.showModal} contentLabel="Settings">
             {this.renderControls()}
